@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { UserApiService } from "../../src/services";
 import { UserResponse } from "../../src/models";
-import { AssertionExtensions } from "../../src/utils";
+import { assertStatusCode } from "../../src/utils";
 
 /**
  * Tests for GET /users and GET /users/{id} endpoints.
@@ -19,7 +19,7 @@ test.describe("Get Users @users @get", () => {
     const response = await userService.getUsers();
 
     // Assert
-    AssertionExtensions.assertStatusCode(response, 200);
+    assertStatusCode(response, 200);
 
     const users: UserResponse[] = await response.json();
     expect(users).toHaveLength(10);
@@ -39,7 +39,7 @@ test.describe("Get Users @users @get", () => {
     const response = await userService.getUserById(userId);
 
     // Assert
-    AssertionExtensions.assertStatusCode(response, 200);
+    assertStatusCode(response, 200);
 
     const user: UserResponse = await response.json();
     expect(user.id).toBe(userId);
@@ -57,7 +57,7 @@ test.describe("Get Users @users @get", () => {
     const response = await userService.getUserById(999);
 
     // Assert
-    AssertionExtensions.assertStatusCode(response, 404);
+    assertStatusCode(response, 404);
   });
 
   const testCaseIds = [1, 5, 10];
@@ -68,7 +68,7 @@ test.describe("Get Users @users @get", () => {
       const response = await userService.getUserById(userId);
 
       // Assert
-      AssertionExtensions.assertStatusCode(response, 200);
+      assertStatusCode(response, 200);
 
       const user: UserResponse = await response.json();
       expect(user.id).toBe(userId);

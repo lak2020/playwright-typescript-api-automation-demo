@@ -18,23 +18,18 @@ A modern API test automation framework built with **Playwright for TypeScript**,
 
 ```
 ├── src/
-│   ├── base/                       # Base classes & logger
-│   │   ├── api-client-factory.ts   # Playwright API context wrapper
+│   ├── base/                       # Logger infrastructure
 │   │   └── logger.ts               # Winston structured logging
-│   ├── config/                     # Configuration management
-│   │   └── test-configuration.ts   # Centralized config via appsettings.json
 │   ├── models/                     # Request/Response type definitions
-│   │   ├── request.models.ts       # CreatePostRequest, UpdatePostRequest, etc.
+│   │   ├── request.models.ts       # CreatePostRequest, UpdatePostRequest
 │   │   └── response.models.ts      # PostResponse, UserResponse, etc.
 │   ├── services/                   # Service Object Pattern (API abstraction)
 │   │   ├── post-api.service.ts     # Post CRUD operations
 │   │   ├── user-api.service.ts     # User read operations
 │   │   └── todo-api.service.ts     # Todo read operations
-│   ├── utils/                      # Helpers & extensions
-│   │   ├── assertion-extensions.ts # Custom assertion helpers
-│   │   └── test-data-generator.ts  # Random test data via @faker-js/faker
-│   └── test-data/                  # Static test data files
-│       └── posts.json
+│   └── utils/                      # Helpers & extensions
+│       ├── assertion-helpers.ts    # Custom assertion helper functions
+│       └── test-data-generator.ts  # Random test data via @faker-js/faker
 ├── tests/                          # Test specs organized by feature
 │   ├── post-tests/                 # GET, POST, PUT, PATCH, DELETE posts
 │   │   ├── get-post.spec.ts
@@ -45,8 +40,7 @@ A modern API test automation framework built with **Playwright for TypeScript**,
 │   │   └── get-todo.spec.ts
 │   └── user-tests/                 # GET users
 │       └── get-user.spec.ts
-├── playwright.config.ts            # Playwright configuration
-├── appsettings.json                # Test configuration
+├── playwright.config.ts            # Playwright & test configuration
 ├── tsconfig.json                   # TypeScript configuration
 └── package.json                    # Dependencies & scripts
 ```
@@ -132,16 +126,16 @@ This project uses [JSONPlaceholder](https://jsonplaceholder.typicode.com) — a 
 
 ## 🔧 Configuration
 
-Edit `appsettings.json` to customize:
+All test configuration lives in `playwright.config.ts`:
 
-```json
-{
-  "ApiSettings": {
-    "BaseUrl": "https://jsonplaceholder.typicode.com",
-    "Timeout": 30000,
-    "RetryCount": 2
-  }
-}
+```ts
+use: {
+  baseURL: process.env.BASE_URL || "https://jsonplaceholder.typicode.com",
+  extraHTTPHeaders: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  },
+},
 ```
 
 Override via environment variables: `BASE_URL=https://your-api.com npx playwright test`
@@ -149,10 +143,10 @@ Override via environment variables: `BASE_URL=https://your-api.com npx playwrigh
 ## 📝 Key Design Patterns
 
 - **Service Object Pattern** — API operations encapsulated in service classes
-- **Factory Pattern** — `ApiClientFactory` wraps Playwright request context
-- **Configuration Pattern** — Environment-aware config via `appsettings.json` + env vars
+- **Playwright Fixtures** — Tests use built-in `request` fixture for dependency injection
 - **Data-Driven Testing** — Parameterized tests + @faker-js/faker random data
 - **Structured Logging** — Winston console + file logging
+- **Typed Models** — TypeScript interfaces for request/response contracts
 
 ## 📊 Allure Reporting
 

@@ -1,2 +1,16 @@
-export { AssertionExtensions } from "./assertion-extensions";
-export { TestDataGenerator } from "./test-data-generator";
+export {
+  assertStatusCode,
+  assertHeader,
+  assertJsonContentType,
+  assertSuccessful,
+  assertBodyContains,
+  logResponse,
+} from "./assertion-helpers";
+
+export {
+  generateCreatePostRequest,
+  generateUpdatePostRequest,
+  generateMultiplePosts,
+  generateEmail,
+  generateTitle,
+} from "./test-data-generator";

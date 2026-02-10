@@ -1,13 +1,15 @@
 import * as winston from "winston";
 import * as path from "path";
-import { TestConfiguration } from "../config";
+
+const LOG_LEVEL = process.env.LOG_LEVEL || "info";
+const LOG_DIR = process.env.LOG_DIR || "logs";
 
 /**
  * Centralized logger using Winston.
- * Provides console + file logging similar to Serilog in the C# version.
+ * Provides console + file structured logging for test execution.
  */
 const logger = winston.createLogger({
-  level: TestConfiguration.logLevel,
+  level: LOG_LEVEL,
   format: winston.format.combine(
     winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss.SSS" }),
     winston.format.printf(({ timestamp, level, message }) => {
@@ -25,7 +27,7 @@ const logger = winston.createLogger({
       ),
     }),
     new winston.transports.File({
-      filename: path.join(TestConfiguration.logDirectory, "test-log.txt"),
+      filename: path.join(LOG_DIR, "test-log.txt"),
       maxsize: 5_242_880, // 5MB
       maxFiles: 5,
     }),

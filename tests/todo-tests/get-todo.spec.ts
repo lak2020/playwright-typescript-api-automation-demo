@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { TodoApiService } from "../../src/services";
 import { TodoResponse } from "../../src/models";
-import { AssertionExtensions } from "../../src/utils";
+import { assertStatusCode } from "../../src/utils";
 
 /**
  * Tests for GET /todos and GET /todos/{id} endpoints.
@@ -19,7 +19,7 @@ test.describe("Get Todos @todos @get", () => {
     const response = await todoService.getTodos();
 
     // Assert
-    AssertionExtensions.assertStatusCode(response, 200);
+    assertStatusCode(response, 200);
 
     const todos: TodoResponse[] = await response.json();
     expect(todos).toHaveLength(200);
@@ -38,7 +38,7 @@ test.describe("Get Todos @todos @get", () => {
     const response = await todoService.getTodoById(todoId);
 
     // Assert
-    AssertionExtensions.assertStatusCode(response, 200);
+    assertStatusCode(response, 200);
 
     const todo: TodoResponse = await response.json();
     expect(todo.id).toBe(todoId);
@@ -54,7 +54,7 @@ test.describe("Get Todos @todos @get", () => {
     const response = await todoService.getTodosByUserId(userId);
 
     // Assert
-    AssertionExtensions.assertStatusCode(response, 200);
+    assertStatusCode(response, 200);
 
     const todos: TodoResponse[] = await response.json();
     expect(todos.length).toBeGreaterThan(0);
@@ -68,7 +68,7 @@ test.describe("Get Todos @todos @get", () => {
     const response = await todoService.getTodoById(999);
 
     // Assert
-    AssertionExtensions.assertStatusCode(response, 404);
+    assertStatusCode(response, 404);
   });
 
   test("GET /todos contains both completed and incomplete items", async () => {
@@ -76,7 +76,7 @@ test.describe("Get Todos @todos @get", () => {
     const response = await todoService.getTodos();
 
     // Assert
-    AssertionExtensions.assertStatusCode(response, 200);
+    assertStatusCode(response, 200);
 
     const todos: TodoResponse[] = await response.json();
     const hasCompleted = todos.some((t) => t.completed === true);

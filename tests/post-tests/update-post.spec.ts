@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { PostApiService } from "../../src/services";
 import { PostResponse, UpdatePostRequest } from "../../src/models";
-import { AssertionExtensions, TestDataGenerator } from "../../src/utils";
+import { assertStatusCode, generateUpdatePostRequest } from "../../src/utils";
 
 /**
  * Tests for PUT and PATCH /posts/{id} endpoints.
@@ -27,7 +27,7 @@ test.describe("Update Posts @posts @put @patch", () => {
     const response = await postService.updatePost(postId, updateData);
 
     // Assert
-    AssertionExtensions.assertStatusCode(response, 200);
+    assertStatusCode(response, 200);
 
     const result: PostResponse = await response.json();
     expect(result.id).toBe(postId);
@@ -45,7 +45,7 @@ test.describe("Update Posts @posts @put @patch", () => {
     const response = await postService.patchPost(postId, patchData);
 
     // Assert
-    AssertionExtensions.assertStatusCode(response, 200);
+    assertStatusCode(response, 200);
 
     const result: PostResponse = await response.json();
     expect(result.id).toBe(postId);
@@ -57,13 +57,13 @@ test.describe("Update Posts @posts @put @patch", () => {
   test("PUT /posts/{id} with random data updates correctly", async () => {
     // Arrange
     const postId = 5;
-    const updateData = TestDataGenerator.generateUpdatePostRequest();
+    const updateData = generateUpdatePostRequest();
 
     // Act
     const response = await postService.updatePost(postId, updateData);
 
     // Assert
-    AssertionExtensions.assertStatusCode(response, 200);
+    assertStatusCode(response, 200);
 
     const result: PostResponse = await response.json();
     expect(result.id).toBe(postId);

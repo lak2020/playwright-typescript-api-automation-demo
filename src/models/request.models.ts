@@ -15,11 +15,3 @@ export interface UpdatePostRequest {
   body: string;
   userId: number;
 }
-
-/**
- * Request model for updating a user via PUT/PATCH /users/{id}.
- */
-export interface UpdateUserRequest {
-  name: string;
-  job: string;
-}

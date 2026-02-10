@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 import { PostApiService } from "../../src/services";
-import { AssertionExtensions } from "../../src/utils";
+import { assertStatusCode } from "../../src/utils";
 
 /**
  * Tests for DELETE /posts/{id} endpoint.
@@ -20,7 +20,7 @@ test.describe("Delete Posts @posts @delete", () => {
     const response = await postService.deletePost(postId);
 
     // Assert
-    AssertionExtensions.assertStatusCode(response, 200);
+    assertStatusCode(response, 200);
   });
 
   const testCaseIds = [1, 50, 100];
@@ -31,7 +31,7 @@ test.describe("Delete Posts @posts @delete", () => {
       const response = await postService.deletePost(postId);
 
       // Assert
-      AssertionExtensions.assertStatusCode(response, 200);
+      assertStatusCode(response, 200);
     });
   }
 });

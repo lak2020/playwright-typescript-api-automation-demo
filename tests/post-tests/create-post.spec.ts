@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { PostApiService } from "../../src/services";
 import { PostResponse, CreatePostRequest } from "../../src/models";
-import { AssertionExtensions, TestDataGenerator } from "../../src/utils";
+import { assertStatusCode, generateCreatePostRequest } from "../../src/utils";
 
 /**
  * Tests for POST /posts endpoint.
@@ -26,7 +26,7 @@ test.describe("Create Posts @posts @post", () => {
     const response = await postService.createPost(newPost);
 
     // Assert
-    AssertionExtensions.assertStatusCode(response, 201);
+    assertStatusCode(response, 201);
 
     const result: PostResponse = await response.json();
     expect(result.title).toBe(newPost.title);
@@ -37,13 +37,13 @@ test.describe("Create Posts @posts @post", () => {
 
   test("POST /posts with random data creates post correctly @smoke", async () => {
     // Arrange
-    const newPost = TestDataGenerator.generateCreatePostRequest();
+    const newPost = generateCreatePostRequest();
 
     // Act
     const response = await postService.createPost(newPost);
 
     // Assert
-    AssertionExtensions.assertStatusCode(response, 201);
+    assertStatusCode(response, 201);
 
     const result: PostResponse = await response.json();
     expect(result.title).toBe(newPost.title);
@@ -66,7 +66,7 @@ test.describe("Create Posts @posts @post", () => {
       const response = await postService.createPost(newPost);
 
       // Assert
-      AssertionExtensions.assertStatusCode(response, 201);
+      assertStatusCode(response, 201);
 
       const result: PostResponse = await response.json();
       expect(result.title).toBe(title);

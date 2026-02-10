@@ -1,8 +1,7 @@
-import { test, expect, APIRequestContext } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 import { PostApiService } from "../../src/services";
-import { PostResponse } from "../../src/models";
-import { AssertionExtensions } from "../../src/utils";
-import { logger } from "../../src/base";
+import { PostResponse, CommentResponse } from "../../src/models";
+import { assertStatusCode } from "../../src/utils";
 
 /**
  * Tests for GET /posts and GET /posts/{id} endpoints.
@@ -20,7 +19,7 @@ test.describe("Get Posts @posts @get", () => {
     const response = await postService.getPosts();
 
     // Assert
-    AssertionExtensions.assertStatusCode(response, 200);
+    assertStatusCode(response, 200);
 
     const posts: PostResponse[] = await response.json();
     expect(posts).toHaveLength(100);
@@ -40,7 +39,7 @@ test.describe("Get Posts @posts @get", () => {
     const response = await postService.getPostById(postId);
 
     // Assert
-    AssertionExtensions.assertStatusCode(response, 200);
+    assertStatusCode(response, 200);
 
     const post: PostResponse = await response.json();
     expect(post.id).toBe(postId);
@@ -54,7 +53,7 @@ test.describe("Get Posts @posts @get", () => {
     const response = await postService.getPostById(999);
 
     // Assert
-    AssertionExtensions.assertStatusCode(response, 404);
+    assertStatusCode(response, 404);
   });
 
   test("GET /posts?userId=1 returns only posts for user 1", async () => {
@@ -65,7 +64,7 @@ test.describe("Get Posts @posts @get", () => {
     const response = await postService.getPostsByUserId(userId);
 
     // Assert
-    AssertionExtensions.assertStatusCode(response, 200);
+    assertStatusCode(response, 200);
 
     const posts: PostResponse[] = await response.json();
     expect(posts.length).toBeGreaterThan(0);
@@ -82,9 +81,9 @@ test.describe("Get Posts @posts @get", () => {
     const response = await postService.getPostComments(postId);
 
     // Assert
-    AssertionExtensions.assertStatusCode(response, 200);
+    assertStatusCode(response, 200);
 
-    const comments = await response.json();
+    const comments: CommentResponse[] = await response.json();
     expect(comments.length).toBeGreaterThan(0);
     for (const comment of comments) {
       expect(comment.postId).toBe(postId);
