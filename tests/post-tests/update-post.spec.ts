@@ -1,0 +1,80 @@
+import { test, expect } from "@playwright/test";
+import { PostApiService } from "../../src/services";
+import { PostResponse, UpdatePostRequest } from "../../src/models";
+import { AssertionExtensions, TestDataGenerator } from "../../src/utils";
+
+/**
+ * Tests for PUT and PATCH /posts/{id} endpoints.
+ * Covers: full update, partial update, and response validation.
+ */
+test.describe("Update Posts @posts @put @patch", () => {
+  let postService: PostApiService;
+
+  test.beforeAll(async ({ playwright }) => {
+    const context = await playwright.request.newContext({
+      baseURL: "https://jsonplaceholder.typicode.com",
+      extraHTTPHeaders: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    postService = new PostApiService(context);
+  });
+
+  test("PUT /posts/{id} fully updates a post and returns 200 @smoke", async () => {
+    // Arrange
+    const postId = 1;
+    const updateData: UpdatePostRequest = {
+      title: "Updated Title",
+      body: "Updated body content",
+      userId: 1,
+    };
+
+    // Act
+    const response = await postService.updatePost(postId, updateData);
+
+    // Assert
+    AssertionExtensions.assertStatusCode(response, 200);
+
+    const result: PostResponse = await response.json();
+    expect(result.id).toBe(postId);
+    expect(result.title).toBe(updateData.title);
+    expect(result.body).toBe(updateData.body);
+    expect(result.userId).toBe(updateData.userId);
+  });
+
+  test("PATCH /posts/{id} partially updates a post @smoke", async () => {
+    // Arrange
+    const postId = 1;
+    const patchData = { title: "Patched Title Only" };
+
+    // Act
+    const response = await postService.patchPost(postId, patchData);
+
+    // Assert
+    AssertionExtensions.assertStatusCode(response, 200);
+
+    const result: PostResponse = await response.json();
+    expect(result.id).toBe(postId);
+    expect(result.title).toBe("Patched Title Only");
+    // Body and userId should still exist (not cleared)
+    expect(result.userId).toBeGreaterThan(0);
+  });
+
+  test("PUT /posts/{id} with random data updates correctly", async () => {
+    // Arrange
+    const postId = 5;
+    const updateData = TestDataGenerator.generateUpdatePostRequest();
+
+    // Act
+    const response = await postService.updatePost(postId, updateData);
+
+    // Assert
+    AssertionExtensions.assertStatusCode(response, 200);
+
+    const result: PostResponse = await response.json();
+    expect(result.id).toBe(postId);
+    expect(result.title).toBe(updateData.title);
+    expect(result.body).toBe(updateData.body);
+  });
+});
