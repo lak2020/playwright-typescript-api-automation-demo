@@ -1,0 +1,35 @@
+{
+  "name": "playwright-typescript-api-automation-demo",
+  "version": "1.0.0",
+  "description": "A modern API test automation framework built with Playwright for TypeScript, demonstrating best practices for API testing.",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:smoke": "npx playwright test --grep @smoke",
+    "test:posts": "npx playwright test --grep @posts",
+    "test:users": "npx playwright test --grep @users",
+    "test:todos": "npx playwright test --grep @todos",
+    "test:negative": "npx playwright test --grep @negative",
+    "test:report": "npx playwright show-report",
+    "allure:generate": "allure generate allure-results -o allure-report --clean",
+    "allure:serve": "allure serve allure-results",
+    "lint": "eslint src/ tests/",
+    "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\""
+  },
+  "keywords": [
+    "playwright",
+    "api-testing",
+    "typescript",
+    "automation",
+    "rest-api"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@faker-js/faker": "^9.4.0",
+    "@playwright/test": "^1.50.0",
+    "@types/node": "^22.0.0",
+    "allure-playwright": "^3.2.0",
+    "typescript": "^5.7.0",
+    "winston": "^3.17.0"
+  }
+}
