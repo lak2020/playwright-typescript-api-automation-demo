@@ -1,0 +1,2 @@
+[09:02:43 info] POST /posts — Title: Textus bardus convoco demitto cometes territo adduco amet adnuo ustilo., UserId: 3
+[09:02:43 info] Response status: 201 (expected: 201)
