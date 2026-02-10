@@ -1,2 +1,0 @@
-[09:06:40 info] GET /posts?userId=1
-[09:06:40 info] Response status: 200 (expected: 200)

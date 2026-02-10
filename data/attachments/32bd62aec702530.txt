@@ -1,2 +1,0 @@
-[09:06:41 info] PUT /posts/5 — Title: Debilito caput decerno barba confugo abduco.
-[09:06:41 info] Response status: 200 (expected: 200)
