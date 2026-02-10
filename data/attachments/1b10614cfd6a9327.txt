@@ -1,2 +1,0 @@
-[09:02:43 info] PUT /posts/5 — Title: Tracto doloremque advoco conduco qui animus.
-[09:02:43 info] Response status: 200 (expected: 200)
