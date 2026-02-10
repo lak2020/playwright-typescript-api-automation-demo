@@ -10,15 +10,8 @@ import { AssertionExtensions } from "../../src/utils";
 test.describe("Get Todos @todos @get", () => {
   let todoService: TodoApiService;
 
-  test.beforeAll(async ({ playwright }) => {
-    const context = await playwright.request.newContext({
-      baseURL: "https://jsonplaceholder.typicode.com",
-      extraHTTPHeaders: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-    todoService = new TodoApiService(context);
+  test.beforeEach(async ({ request }) => {
+    todoService = new TodoApiService(request);
   });
 
   test("GET /todos returns list of 200 todos @smoke", async () => {

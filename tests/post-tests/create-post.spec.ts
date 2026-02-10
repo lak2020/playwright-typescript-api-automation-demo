@@ -10,15 +10,8 @@ import { AssertionExtensions, TestDataGenerator } from "../../src/utils";
 test.describe("Create Posts @posts @post", () => {
   let postService: PostApiService;
 
-  test.beforeAll(async ({ playwright }) => {
-    const context = await playwright.request.newContext({
-      baseURL: "https://jsonplaceholder.typicode.com",
-      extraHTTPHeaders: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-    postService = new PostApiService(context);
+  test.beforeEach(async ({ request }) => {
+    postService = new PostApiService(request);
   });
 
   test("POST /posts creates a new post and returns 201 @smoke", async () => {

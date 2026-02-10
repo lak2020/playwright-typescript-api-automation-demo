@@ -10,15 +10,8 @@ import { AssertionExtensions } from "../../src/utils";
 test.describe("Get Users @users @get", () => {
   let userService: UserApiService;
 
-  test.beforeAll(async ({ playwright }) => {
-    const context = await playwright.request.newContext({
-      baseURL: "https://jsonplaceholder.typicode.com",
-      extraHTTPHeaders: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-    userService = new UserApiService(context);
+  test.beforeEach(async ({ request }) => {
+    userService = new UserApiService(request);
   });
 
   test("GET /users returns list of 10 users @smoke", async () => {

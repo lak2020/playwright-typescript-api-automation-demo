@@ -3,7 +3,6 @@ import { CreatePostRequest, UpdatePostRequest } from "../models";
 
 /**
  * Generates realistic random test data using @faker-js/faker.
- * Equivalent to the Bogus-based TestDataGenerator in the C# version.
  */
 export class TestDataGenerator {
   /**

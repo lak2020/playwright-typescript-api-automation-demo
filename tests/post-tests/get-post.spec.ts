@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, APIRequestContext } from "@playwright/test";
 import { PostApiService } from "../../src/services";
 import { PostResponse } from "../../src/models";
 import { AssertionExtensions } from "../../src/utils";
@@ -11,15 +11,8 @@ import { logger } from "../../src/base";
 test.describe("Get Posts @posts @get", () => {
   let postService: PostApiService;
 
-  test.beforeAll(async ({ playwright }) => {
-    const context = await playwright.request.newContext({
-      baseURL: "https://jsonplaceholder.typicode.com",
-      extraHTTPHeaders: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-    postService = new PostApiService(context);
+  test.beforeEach(async ({ request }) => {
+    postService = new PostApiService(request);
   });
 
   test("GET /posts returns list of 100 posts @smoke", async () => {
