@@ -1,0 +1,2 @@
+[09:33:32 info] PUT /posts/5 — Title: Contra spero antea tabella curia quas aperio.
+[09:33:32 info] Response status: 200 (expected: 200)

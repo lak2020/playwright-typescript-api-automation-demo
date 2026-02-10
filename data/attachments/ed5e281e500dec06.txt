@@ -1,2 +1,0 @@
-[09:14:55 info] POST /posts — Title: Repellat dolores degenero cui deprecator volva arcus., UserId: 3
-[09:14:55 info] Response status: 201 (expected: 201)

@@ -1,0 +1,2 @@
+[09:33:32 info] PATCH /posts/1
+[09:33:32 info] Response status: 200 (expected: 200)

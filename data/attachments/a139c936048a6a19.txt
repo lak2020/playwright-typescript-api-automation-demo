@@ -1,2 +1,0 @@
-[09:14:55 info] POST /posts — Title: First Post, UserId: 1
-[09:14:55 info] Response status: 201 (expected: 201)

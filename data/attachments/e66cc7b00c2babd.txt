@@ -1,0 +1,2 @@
+[09:33:32 info] GET /users/999
+[09:33:32 info] Response status: 404 (expected: 404)

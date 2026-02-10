@@ -1,2 +1,0 @@
-[09:14:55 info] PUT /posts/5 — Title: Abbas substantia verumtamen eos sublime arca commodo tepidus quod.
-[09:14:55 info] Response status: 200 (expected: 200)

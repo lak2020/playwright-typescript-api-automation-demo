@@ -1,0 +1,2 @@
+[09:33:31 info] POST /posts — Title: Velit supplanto cunabula quos colligo thesis taedium., UserId: 6
+[09:33:31 info] Response status: 201 (expected: 201)
