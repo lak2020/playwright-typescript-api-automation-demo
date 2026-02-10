@@ -1,8 +1,6 @@
 # 🎭 Playwright TypeScript API Automation Demo
 
-A modern API test automation framework built with **Playwright for TypeScript**, demonstrating best practices for API testing.
-
-Converted from the [C# version](https://github.com/lak2020/playwright-csharp-api-automation-demo) — same architecture and test coverage, idiomatic TypeScript.
+A modern API test automation framework built with **Playwright for TypeScript**, demonstrating best practices for API testing including service object pattern, structured logging, Allure reporting, and CI/CD integration.
 
 ---
 
